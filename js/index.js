@@ -33,19 +33,31 @@
     //获取歌词容器中所有歌词的p标签
     var pLists = divContainerSongWord.getElementsByTagName("p");
     //监听音频播放时间变化
+    var oldTime = -1;
     audio.addEventListener("timeupdate",function () {
-        console.log(this.currentTime);
+        // console.log(this.currentTime);
         var curTime = parseInt(this.currentTime);
-        if (pLists && pLists.length > 0) {
+        var idExist = false;
+        if (pLists && pLists.length > 0 && curTime !== oldTime) {
+
             for(var i = 0 ; i < pLists.length;i++){
-                console.log(pLists[i].id);
-                // var songStatement = document.getElementById(curTime);
-                // if(pLists[i] == songStatement){
-                //     songStatement.style.color = "red";
-                // }else{
-                //     pLists[i].style.color = "#ffffff";
-                // }
+                if(pLists[i].id == curTime){
+                    console.log("yes");
+                    idExist = true;
+                    break;
+                }
             }
+            if(idExist){
+                for (var j = 0 ; j<pLists.length;j++) {
+                    var songStatement = document.getElementById(curTime);
+                    if(pLists[j] === songStatement){
+                        songStatement.style.color = "red";
+                    }else{
+                        pLists[j].style.color = "#ffffff";
+                    }
+                }
+            }
+            oldTime =curTime;
         }
     });
 
@@ -63,6 +75,3 @@
         }
     };
 
-    function timeMatch(curTime){
-
-    }
